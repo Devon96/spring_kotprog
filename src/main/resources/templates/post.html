@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="hu"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="fregments/head :: head"></div>
+<body>
+<div th:replace="fregments/header :: header"></div>
+<link rel="stylesheet" th:href="@{/css/post.css}" href="../static/css/post.css" type="text/css">
+
+<main>
+    <section>
+        <div class="container-lg margin-top">
+            <div class="row">
+                <div class="col-1">
+                    <div class="ertekel float-right">
+                        <a href="index.html" th:href="@{/rating/post/like/{id}(id=${post.id})}">
+                            <img th:style="${post.userLiked ? 'opacity: 1' : 'opacity: 0.5'}" class="like" th:src="@{/images/like.png}" src="../static/images/like.png"/>
+                        </a>
+                        <div class="like-num"><h2 class="align-self-center" th:text="${post.ratingCount}">211</h2></div>
+                        <a href="index.html" th:href="@{/rating/post/dislike/{id}(id=${post.id})}">
+                            <img th:style="${post.userDisliked ? 'opacity: 1' : 'opacity: 0.5'}" class="like" th:src="@{/images/dislike.png}" src="../static/images/dislike.png"/>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <h1 th:text="${post.title}">Ez itt a bejegyzés címe</h1>
+                    <h5 th:text="'Író: '+${post.createdBy}">Mészáros Lőrinc</h5>
+                    <h5 th:text="${#dates.format(post.createdDate, 'yyyy-MM-dd HH:mm')}">2020.02.02</h5>
+                    <h5 th:if="${post.lastModifiedDate != post.createdDate}" th:text="'Módosítva: ' + ${post.lastModifiedBy} + ' ' + ${#dates.format(post.lastModifiedDate, 'yyyy-MM-dd HH:mm')}">2020.02.02</h5>
+                    <p th:text="${post.content}">
+                        Ez itt a bejegyzcímeEz itt a bejegyzés címe
+                        Ez itt a bejegyzés címevEz itt a bejegyzés címe
+                    </p>
+                </div>
+
+                <div class="col-1">
+
+                    <a th:if="${#authorization.expression('hasAuthority(''ADMIN'')') or #authentication.name.equals(post.createdBy)}" th:href="@{/post/delete/{id}(id=${post.id})}" href="index.html" >
+                        <svg viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                        </svg>
+                    </a>
+                    <a th:if="${#authorization.expression('hasAuthority(''ADMIN'')') or #authentication.name.equals(post.createdBy)}" th:href="@{/post/edit/{id}(id=${post.id})}" href="index.html">
+                        <svg viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section>
+
+        <div class="container-lg margin-top">
+            <div class="row">
+                <!--/*@thymesVar id="comment" type="com.blog.blog.model.Comment"*/-->
+                <div class="form-group w-100">
+                    <form method="post" action="#" th:object="${comment}" th:action="@{/comment/add/{postID}(postID=${post.id})}">
+                        <label class="control-label">Írd meg a véleményedet</label>
+                        <textarea th:field="*{text}" required class="form-control textarea"></textarea>
+                        <button type="submit" class="btn btn-primary float-right">Közzététel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <section>
+
+        <div class="container-lg margin_top">
+            <hr>
+            <!--/*@thymesVar id="comments" type="com.blog.blog.model.Comment"*/-->
+            <div class="row" th:each="c : ${post.comments}">
+
+                <div class="col-1 margin_top">
+                    <div class=" float-right">
+                        <a th:href="@{/rating/comment/like/{postid}/{id}(id=${c.id}, postid=${post.id})}" href="index.html">
+                            <img th:style="${c.userLiked ? 'opacity: 1' : 'opacity: 0.5'}" class="like" th:src="@{/images/like.png}" src="../static/images/like.png"/>
+                        </a>
+                        <div class="like-num">
+                            <h2 class="align-self-center" th:text="${c.ratingCount}">211</h2>
+                        </div>
+                        <a th:href="@{/rating/comment/dislike/{postid}/{id}(id=${c.id}, postid=${post.id})}" href="index.html">
+                            <img th:style="${c.userDisliked ? 'opacity: 1' : 'opacity: 0.5'}" class="like" th:src="@{/images/dislike.png}" src="../static/images/dislike.png"/>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-11 margin-bottom">
+                    <span class=""><a th:href="@{/profile/{username}(username=${c.createdBy})}"><h3 th:text="${c.createdBy}">Mikkamakkka</h3></a></span>
+                    <span class="delete float-right">
+
+                        <a th:if="${#authorization.expression('hasAuthority(''ADMIN'')') or #authentication.name.equals(c.createdBy)}" th:href="@{/comment/delete/{postid}/{id}(postid=${post.id}, id=${c.id})}" href="index.html">
+                            <svg viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                            </svg>
+                        </a>
+                    </span>
+                    <h5 th:text="${#dates.format(c.createdDate, 'yyyy-MM-dd HH:mm')}" >2020-05-12 12:00</h5>
+                    <p th:text="${c.text}" >
+                        df dswf ds fdsfd sfregferf gegrthg rthrtgfz hzrtgfh tzrgfh tzrgfhtfzrghfztgh hztgfr hztgjnhztgjzthgj
+                        ztjhfhgjfhgdj nzhtgfznjzhtgf jtzhgj ntzhgjztgh
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

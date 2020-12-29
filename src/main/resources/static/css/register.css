@@ -1,0 +1,10 @@
+.registerform{
+    width: 300px;
+    margin: 100px auto;
+}
+.validationError{
+    background-color: red;
+    color: white;
+    padding: 5px;
+    font-weight: bold;
+}

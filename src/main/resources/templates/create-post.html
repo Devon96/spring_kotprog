@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="hu"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="fregments/head :: head"></div>
+<body>
+<div th:replace="fregments/header :: header"></div>
+<link rel="stylesheet" th:href="@{/css/create-post.css}" href="../static/css/create-post.css" type="text/css">
+<script type="application/javascript" th:src="@{/script/createPost.js}" src="../static/script/createPost.js"></script>
+
+<main>
+    <section>
+        <div class="container-lg">
+            <div class="margin-top">
+                <!--/*@thymesVar id="post" type="com.blog.blog.model.Post"*/-->
+                <form action="/post/add" th:action="${post.id == null} ? @{/post/add} : @{/post/edit/{id}(id=${post.id})}" method="post" th:object="${post}" novalidate>
+
+                    <div class="form-group">
+                        <label for="title">Cím:</label>
+                        <input th:field="*{title}" minlength="2" type="text" class="form-control form-control-lg" id="title" required >
+                        <span class="validationError" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea th:field="*{content}" minlength="8" id="content" required class="form-control textarea"></textarea>
+                        <span class="validationError" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>
+                    </div>
+                    <div class="form-group checkbox ">
+                        <label><input type="checkbox" id="newCategory" onclick="myFunction()">Új kategória</label>
+                    </div>
+
+                    <div class="form-group" id="categories">
+                        <label for="categoryTextField">Kategória:</label>
+                        <select th:field="*{category.name}" class="form-control" id="categoryTextField">
+                            <option th:each="cat : ${categories}" th:text="${#strings.capitalizeWords(cat.name)}" th:value="${cat.name}" value="Művészet" >Művészet</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group" id="newCategoryInput">
+                        <input th:field="*{category.name}" type="text" placeholder="Kategória megnevezése:" class="form-control" id="category">
+                    </div>
+
+                    <span class="validationError" th:if="${#fields.hasErrors('category.name')}" th:errors="*{category.name}"></span>
+
+
+                    <button th:text="${post.id} == null ? 'Közzététel' : 'Módosítás'" type="submit" class="btn btn-primary">Közzététel</button>
+                </form>
+
+
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

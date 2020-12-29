@@ -1,0 +1,29 @@
+.profile-img{
+    width: 200px;
+}
+.center{
+    margin: 0 auto;
+}
+
+.img-div{
+    margin-bottom: 30px;
+}
+h2{
+    margin-bottom: 30px;
+}
+
+input{
+    margin-bottom: 30px;
+}
+
+.fileupload{
+    text-align: center;
+}
+
+#newPass{
+    display: none;
+}
+#oldPass{
+    display: none;
+}
+

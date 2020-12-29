@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="hu"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<div th:replace="fregments/head :: head"></div>
+<body>
+<div th:replace="fregments/header :: header"></div>
+<script type="application/javascript" th:src="@{/static/script/index.js}" src="../static/script/index.js"></script>
+<link rel="stylesheet" th:href="@{/css/index.css}" href="../static/css/index.css" type="text/css">
+
+<main>
+    <section>
+        <div class="container-lg">
+            <div class="row">
+                <!--/*@thymesVar id="search" type="com.blog.blog.model.Search"*/-->
+                <form class="margin-top center" th:object="${search}" method="get" th:action="@{/search}" action="/search">
+                    <div class="center form">
+                        <div class="input-group mb-3 search">
+                            <input th:field="*{title}" type="text" class="form-control" placeholder="Cím" >
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit">Keresés</button>
+                            </div>
+                        </div>
+                        <p>
+                            <a class="btn btn-info" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                Részletes keresés
+                            </a>
+                        </p>
+                        <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+
+                                <div class="input-group mb-3 search">
+
+                                    <label for="from">tól:</label>
+                                    <input th:field="*{from}" class="date min_date" min="2020-01-01" type="date" id="from" name="from" />
+
+                                    <label for="to">ig:</label>
+                                    <input th:field="*{to}" class="date max_date" min="2020-01-01" type="date" id="to" name="to" />
+                                </div>
+
+                                <div class="input-group mb-3 search">
+                                    <input th:field="*{content}" type="text" class="form-control" placeholder="Content" >
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="topic">Író</label>
+                                    <select th:field="*{creator}" class="form-control" id="topic">
+                                        <option value="">Összes</option>
+                                        <option th:each="writer : ${writers}" th:text="${#strings.capitalizeWords(writer)}" th:value="${writer}" value="Művészet" >Felhasznalo</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container-lg">
+             <div class="margin-top">
+                 <!--/*@thymesVar id="posts" type="com.blog.blog.model.Post"*/-->
+                 <div th:each="post : ${posts}" class="container-lg comment margin-top">
+                     <div class="row">
+                         <div class="col-10"><a th:href="@{/post/{id}(id=${post.id})}" href="index.html"><h4 class="username" th:text="${post.title}">MikiMouseClubHouse</h4></a></div><div class="col-2"><h5 th:text="${post.ratingCount}">42</h5></div>
+                     </div>
+                     <div class="row">
+                         <div class="col-12"><h6 style="margin: 0" th:text="${#dates.format(post.lastModifiedDate, 'yyyy-MM-dd HH:mm')}" class="date">2020-09-21 12-15</h6></div>
+                     </div>
+                     <div class="row">
+                         <div class="col-12">
+                             <p th:text="${post.content}">
+                                 a 8 éves nem értékelte a 11 éves igen, nem voltunk sokáig, de szerintem érdemes meglátogatni, legközelebb biztos több időt szánok rá, addig a kisebb is nagyobb lesz
+                             </p>
+                         </div>
+                     </div>
+                     <div class="row">
+                         <div class="col-12">
+                            <h3 class="category" th:text="${post.category.name}">Művészet</h3>
+                         </div>
+                     </div>
+                 </div>
+
+
+             </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

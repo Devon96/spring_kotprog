@@ -1,0 +1,44 @@
+
+
+.center{
+    margin: 0 auto;
+}
+
+
+
+.date{
+    margin: 0 10px;
+}
+.collapse{
+    width: 460px;
+}
+.form{
+    width: 460px;
+}
+.btn-danger{
+    width: 100%;
+    padding: 2px 5px;
+}
+
+h5{
+    font-size: 20px;
+    text-align: center;
+}
+
+a{
+    color: inherit;
+    text-decoration: inherit;
+}
+a:hover{
+    color: inherit;
+    text-decoration: inherit;
+}
+h3.category{
+    color: #888888;
+    font-size: 20px;
+}
+h6{
+    margin: 0;
+    color: #555555;
+    padding: 0;
+}

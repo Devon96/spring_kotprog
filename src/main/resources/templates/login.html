@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="hu"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="fregments/head :: head"></div>
+<body>
+<div th:replace="fregments/header :: header"></div>
+<script type="application/javascript" th:src="@{/static/script/index.js}" src="../static/script/index.js"></script>
+<link rel="stylesheet" th:href="@{/css/login.css}" href="../static/css/login.css" type="text/css">
+
+<main>
+    <section>
+        <div class="container-lg">
+            <div class="row">
+                <!--/*@thymesVar id="user" type="com.blog.blog.model.User"*/-->
+                <form name="login" class="loginform" th:action="@{/login}" method="post" novalidate>
+                    <div class="form-group">
+                        <div id="error" th:if="${param.error}" class="alert alert-danger">Sikertelen bejelentkezés</div>
+                        <label for="username">Felhasználónév</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Felhasználónév">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Jelszó</label>
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Jelszó">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Bejelentkezés</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

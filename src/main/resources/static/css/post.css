@@ -1,0 +1,46 @@
+.like{
+    height: 40px;
+    display: block;
+    margin: 0 auto;
+    width: 30px;
+}
+.like-num{
+    width: 40px;
+}
+h2{
+    text-align: center;
+    height: 40px;
+    margin: 0;
+
+}
+.ertekel{
+    margin-top: 20px;
+}
+.textarea{
+    min-height: 150px;
+    font-size: 20px;
+}
+.btn-primary{
+    margin-top: 20px;
+}
+
+span{
+    display: inline-block;
+}
+.btn-danger{
+    margin: 0;
+    padding: 5px 10px;
+}
+hr{
+    margin-top: 20px;
+}
+h5{
+    color: #888888;
+    font-size: 15px;
+}
+svg{
+    width: 30px;
+}
+a:hover{
+    text-decoration: none;
+}

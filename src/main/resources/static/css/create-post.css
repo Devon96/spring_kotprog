@@ -1,0 +1,13 @@
+#newCategoryInput{
+    display: none;
+}
+.textarea{
+    min-height: 150px;
+    font-size: 20px;
+}
+.validationError{
+    background-color: red;
+    color: white;
+    padding: 5px;
+    font-weight: bold;
+}
