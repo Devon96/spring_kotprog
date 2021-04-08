@@ -27,10 +27,6 @@ public class Comment extends AuditableEntity<String> {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Post post;
 
-    /*
-    @OneToMany
-    private List<CommentRating> commentRatings;
-    */
 
     @Transient
     private int ratingCount;
